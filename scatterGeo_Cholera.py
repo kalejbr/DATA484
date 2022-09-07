@@ -112,12 +112,11 @@ frames = [dict(data=[dict(type='scattermapbox',
 
 fig.update(frames=frames)
 
-sliders = [dict(steps=[dict(method='animate',
-                            args=[[f'frame{k}'],
-                                dict(mode='immediate',
-                                frame=dict(duration=100, redraw=True),
-                                transition=dict(duration=0))
-                                ],
+sliders = [dict(steps=[dict(method='animate', args=[[f'frame{k}'],
+                            dict(mode='immediate',
+                            frame=dict(duration=100, redraw=True),
+                            transition=dict(duration=0))
+                            ],
                             label='{:d}'.format(k))
                 for k in range(len(df))],
                 transition=dict(duration=0),
@@ -130,7 +129,7 @@ sliders = [dict(steps=[dict(method='animate',
                 len=1.0)
            ]
 
-fig.update_layout(updatemenus=[dict(type='buttons', showactive=True,
+fig.update_layout(updatemenus=[dict(type='buttons', showactive=False,
                                     y=0,
                                     x=1.05,
                                     xanchor='right',
@@ -139,7 +138,7 @@ fig.update_layout(updatemenus=[dict(type='buttons', showactive=True,
                                     buttons=[dict(label='Play',
                                                   method='animate',
                                                   args=[None,
-                                                        dict(frame=dict(duration=100,
+                                                        dict(frame=dict(duration=200,
                                                                         redraw=True),
                                                              transition=dict(duration=0),
                                                              fromcurrent=True,

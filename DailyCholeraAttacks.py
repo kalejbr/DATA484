@@ -3,8 +3,8 @@ import numpy as np
 import plotly.graph_objs as go
 import plotly.offline as pyo
 
+
 df = pd.read_table('data/choleraDeaths.tsv')
-# print(df['Date'])
 cols = ["Today's Attacks",'Total Attacks',"Today's Deaths",'Total Deaths']
 
 data = []

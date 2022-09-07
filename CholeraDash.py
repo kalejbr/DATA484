@@ -1,5 +1,5 @@
 import dash
-# from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
@@ -16,12 +16,23 @@ def format_df(dataframe):
     return dataframe
 
 
+# Import and copy data: df2 is used to display formatted values
 df = pd.read_csv('data/UKcensus1851_clean.csv', index_col=0)
 df2 = df.copy()
 format_df(df2)
 datum = ['male', 'female']
 
+# Apply layout
+app.layout = html.Div([
+    html.H1("Placeholder Name of Dashboard with Dash", style={'text-align': 'center'}),
 
+    dcc.Dropdown(id="Select_data",
+                 options=[
+                     # {"label": "Scatterbox", "value": }
+                 ])
+])
+
+# Connect plotly graphs with Dash Components
 fig = make_subplots(rows=3, cols=2,
                     vertical_spacing=0.05,
                     specs=[[{"type": "table"}, {"type": "pie"}],
