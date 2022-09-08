@@ -20,8 +20,6 @@ arr2 = df['female'].to_numpy()
 df2.loc[:, "male"] = df2["male"].map('{:,d}'.format)
 df2.loc[:, "female"] = df2["female"].map('{:,d}'.format)
 df2.loc[:, "all"] = df2["all"].map('{:,d}'.format)
-# print(df)
-# print(df2)
 
 datum = ['male', 'female']
 
@@ -220,7 +218,7 @@ fig.update_layout(
         text='UK Census 1851',
         x=0.5,
         font=dict(
-            size=22,
+            size=26,
             color="rgb(201, 202, 204)",
             family="Balto"
         )
@@ -243,7 +241,15 @@ fig.update_layout(
         tickfont_size=14,
         zerolinewidth=0,
         gridcolor="#a2a2a2"
-    )
+    ),
+    margin={
+            "t": 100,
+            "l": 200,
+            "b": 150,
+            "r": 20,
+            "pad": 30
+           }
 )
 
-pyo.plot(fig, filename='UK1851census.html')
+fig.show()
+# pyo.plot(fig, filename='UK1851census.html')

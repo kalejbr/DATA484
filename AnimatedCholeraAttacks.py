@@ -14,8 +14,8 @@ data = []
 
 for col in cols:
     trace = go.Scatter(
-        x = df.Date[:2],
-        y = df[col][:2],
+        x = df.Date[:1],
+        y = df[col][:1],
         mode = 'lines',
         name = col,
     )
@@ -33,7 +33,7 @@ layout = go.Layout(
                       buttons=[dict(label="Play",
                                     method='animate',
                                     args=[None,
-                                          dict(frame=dict(duration=80,
+                                          dict(frame=dict(duration=70,
                                                           redraw=False),
                                                transition=dict(duration=0),
                                                fromcurrent=False,
