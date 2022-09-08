@@ -1,0 +1,8 @@
+By: Kale Beever-Riordon
+
+About the Project-
+    Libraries used: Plotly, Dash, Pandas, Numpy, and Dash Bootstrap Components
+    Data used: Derived from Jon Snow's works during the 3rd great Cholera Outbreak
+        in London. It includes the locations of casualties from the outbreak, the
+        locations of 6 water pumps in the SoHo neighborhood, the Census numbers from
+        1851, and information regarding a cholera outbreak in Naples, Italy.

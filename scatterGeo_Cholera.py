@@ -2,8 +2,8 @@ import pandas as pd
 import plotly.graph_objs as go
 import plotly.offline as pyo
 import random
-
 import warnings
+
 warnings.filterwarnings("ignore")
 
 df = pd.read_csv('data/choleraDeathLocations.csv')

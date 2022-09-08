@@ -43,12 +43,6 @@ layout.update(xaxis=(dict(range=[df.Date[0], df.Date[len(df) - 1]],
                           autorange=False,
                           nticks=18,
                           tickangle=45,
-                          title=dict(
-                              text="Date",
-                              font={
-                                  "size": 24
-                              }
-                          ),
                           tickson="labels",
                           tickfont={
                               "size": 20,

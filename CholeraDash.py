@@ -4,8 +4,12 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+from plotly.colors import n_colors
 import dash_bootstrap_components as dbc
+import numpy as np
 import pandas as pd
+import random
+import warnings
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
@@ -13,13 +17,16 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 app.layout = dbc.Container(
     [
         dcc.Store(id="store"),
-        html.H1("Dynamically rendered tab content"),
+        html.H1("DATA 484 - Project 1"),
         html.Hr(),
 
         dbc.Tabs(
             [
-                dbc.Tab(label='Tab one', tab_id='tab-1'),
-                dbc.Tab(label='Tab two', tab_id='tab-2'),
+                dbc.Tab(label='UK Census - 1851', tab_id='tab-1'),
+                dbc.Tab(label='UK Cholera Outbreak', tab_id='tab-2'),
+                dbc.Tab(label='Cholera - Naples, IT', tab_id='tab-3'),
+                dbc.Tab(label='UK Cholera ScatterMap', tab_id='tab-4'),
+                dbc.Tab(label='References', tab_id='tab-5'),
             ],
             id="tabs",
             active_tab="Tab one",
@@ -341,12 +348,6 @@ def name_to_figure(active_tab):
                                   autorange=False,
                                   nticks=18,
                                   tickangle=45,
-                                  title=dict(
-                                      text="Date",
-                                      font={
-                                          "size": 24
-                                      }
-                                  ),
                                   tickson="labels",
                                   tickfont={
                                       "size": 20,
@@ -383,7 +384,7 @@ def name_to_figure(active_tab):
                           "b": 100,
                           "pad": 30
                       },
-                      hovermode='x unified',
+                      # hovermode='x unified',
                       hoverlabel=dict(namelength=-1, font_size=18, ),
                       paper_bgcolor="rgb(17,17,17)",
                       plot_bgcolor="rgb(17,17,17)",
@@ -416,11 +417,324 @@ def name_to_figure(active_tab):
                        ) for k in range(1, len(df[cols[0]] - 1))]
 
         fig = go.Figure(data=data, frames=frames, layout=layout)
+        fig.update_layout(hovermode='x')
         return html.Div([
             # html.H3('Tab content 2'),
             dcc.Graph(
                 figure=fig
             )
+        ])
+    elif active_tab == 'tab-3':
+        colors = n_colors('rgb(252, 211, 182)', 'rgb(250, 105, 2)', 40, colortype='rgb')
+
+        df = pd.read_table('data/naplesCholeraAgeSexData.tsv', header=6)
+        # print(df)
+
+        fig = make_subplots(
+            rows=2, cols=1,
+            shared_xaxes=True,
+            vertical_spacing=0.13,
+            specs=[
+                [{"type": "bar"}],
+                [{"type": "table"}]
+                ]
+        )
+
+        fig.add_trace(
+            go.Table(
+                header=dict(
+                    values=["Age", "Male", "Female"],
+                    font=dict(
+                        color='rgb(227, 227, 230)',
+                        size=17,
+                        family="Roboto"
+                    ),
+                    fill_color='#2b2b2b',
+                    line_color="#2b2b2b",
+                    align="center",
+                    height=27
+                ),
+                cells=dict(
+                    values=[df[xy].tolist() for xy in df.columns[0:]],
+                    line_color=[np.array(colors)[df['male'].to_numpy(int)],
+                                np.array(colors)[df['female'].to_numpy(int)]],
+                    fill_color=[np.array(colors)[df['male'].to_numpy(int)],
+                                np.array(colors)[df['female'].to_numpy(int)]],
+                    align='center')
+            ),
+            row=2, col=1
+        )
+
+        fig.add_trace(
+            trace=go.Bar(
+                x=df['age'],
+                y=df['male'],
+                name='Male',
+                marker=dict(
+                    color="#5e7bd1",
+                    # color= df[datum[0]],
+                    # cmin=-2000000,
+                    # cmax=3000000,
+                    # colorscale='bupu',
+                    line=dict(
+                        color="#d95604",
+                        # color= df[datum[0]],
+                        # colorscale='inferno',
+                        width=1
+                    )
+                )
+            ),
+            row=1, col=1
+        )
+
+        fig.add_trace(
+            trace=go.Bar(
+                x=df['age'],
+                y=df['female'],
+                name='Female',
+                marker=dict(
+                    color="#db0763",
+                    # color=df[datum[1]],
+                    # cmin=-2000000,
+                    # cmax=3000000,
+                    # colorscale="purd",
+                    line=dict(
+                        color="#d95604",
+                        # color=df[datum[0]],
+                        # colorscale='inferno',
+                        width=1
+                    )
+                )
+            ),
+            row=1, col=1
+        )
+
+        fig.update_layout(
+            height=900,
+            showlegend=False,
+            title=dict(
+                text='Cholera in Naples',
+                x=0.5,
+                font=dict(
+                    size=22,
+                    color="rgb(201, 202, 204)",
+                    family="Balto"
+                )
+            ),
+            paper_bgcolor="rgb(3, 3, 3)",
+            plot_bgcolor="rgb(3, 3, 3)",
+            xaxis=dict(
+                title='Age Range',
+                titlefont_color="rgb(201, 202, 204)",
+                titlefont_size=18,
+                tickfont_color="rgb(201, 202, 204)",
+                tickfont_size=14,
+                tickangle=-15
+            ),
+            yaxis=dict(
+                title='Deaths per 10,000',
+                titlefont_color="rgb(201, 202, 204)",
+                titlefont_size=18,
+                tickfont_color="rgb(201, 202, 204)",
+                tickfont_size=14,
+                zerolinewidth=0,
+                gridcolor="#a2a2a2"
+            )
+        )
+        return html.Div([
+            # html.H3('Tab content 1'),
+            dcc.Graph(
+                figure=fig
+            )
+        ])
+    if active_tab == 'tab-4':
+
+        warnings.filterwarnings("ignore")
+
+        df = pd.read_csv('data/choleraDeathLocations.csv')
+        df2 = pd.read_csv('data/choleraPumpLocations.csv')
+        lat1 = df.Lat
+        lon1 = df.Lon
+        lat2 = df2.Lt
+        lon2 = df2.Ln
+
+        random.Random(3).shuffle(lat1)
+        random.Random(3).shuffle(lon1)
+        random.Random(3).shuffle(df['Deaths'])
+
+        fig = go.Figure()
+
+        fig.add_trace(
+            go.Scattermapbox(
+                lat=lat1[:1],
+                lon=lon1[:1],
+                mode='markers',
+                marker=dict(
+                    color = df['Deaths'],
+                    colorscale='Agsunset',
+                ),
+                name='Casualty Location',
+                hovertemplate=
+                '<b>Reported Deaths: </b>%{text}<extra></extra>' +
+                '<br>\u03D1: %{lat}' +
+                '<br>\u03D5: %{lon}',
+                text=df["Deaths"].values.tolist(),
+                hoverinfo="text+lat+lon"
+            )
+        )
+        fig.add_trace(
+            go.Scattermapbox(
+                lat=lat2,
+                lon=lon2,
+                mode='markers',
+                marker=dict(
+                    size=8,
+                    color='rgb(255,0,0)'
+                ),
+                name="Pump Location",
+                hovertemplate='<b>Pump No: </b>%{text}<extra></extra>',
+                text=df2["Pump No."].values.tolist(),
+                hoverinfo="text+lat+lon",
+            )
+        )
+
+        fig.update_layout(
+            height=600,
+            legend=dict(
+                yanchor='top',
+                y=0.99,
+                xanchor='left',
+                x=0.01,
+                font=dict(
+                    family='Arial',
+                    size=12,
+                    color='white'
+                ),
+            ),
+            title=dict(
+                text='UK Cholera Outbreak',
+                x=0.5,
+                font=dict(
+                    size=22,
+                    color="rgb(201, 202, 204)",
+                    family="Balto"
+                )
+            ),
+            autosize=True,
+            hovermode='closest',
+            mapbox=dict(
+                style='carto-darkmatter',
+                bearing=64,
+                center=go.layout.mapbox.Center(
+                    lat=51.51337173947445,
+                    lon=-0.13686837809898589
+                ),
+                pitch=60,
+                zoom=16.182448580347329
+            ),
+            yaxis=dict(
+                range=[
+                    -0.14062545007800312,
+                    -0.13238154992199688
+                ],
+                autorange=True
+            ),
+            xaxis=dict(
+                range=[
+                    51.511608752969124,
+                    51.516081247030876
+                ],
+                autorange=True
+            ),
+            paper_bgcolor="rgb(0,0,0)"
+        )
+
+        frames = [dict(data=[dict(type='scattermapbox',
+                                  lat=df.loc[:k + 1, 'Lat'],
+                                  lon=df.loc[:k + 1, 'Lon']
+                                  )],
+                       traces=[0],
+                       name=f'frame{k}'
+                       ) for k in range(len(df))]
+
+        fig.update(frames=frames)
+
+        sliders = [dict(steps=[dict(method='animate', args=[[f'frame{k}'],
+                                                            dict(mode='immediate',
+                                                                 frame=dict(duration=100, redraw=True),
+                                                                 transition=dict(duration=0))
+                                                            ],
+                                    label='{:d}'.format(k))
+                               for k in range(len(df))],
+                        transition=dict(duration=0),
+                        x=0,
+                        y=0,
+                        currentvalue=dict(font=dict(size=12),
+                                          prefix='Point: ',
+                                          visible=True,
+                                          xanchor='center'),
+                        len=1.0)
+                   ]
+
+        fig.update_layout(updatemenus=[dict(type='buttons', showactive=False,
+                                            y=0,
+                                            x=1.05,
+                                            xanchor='right',
+                                            yanchor='top',
+                                            pad=dict(t=0, r=10),
+                                            buttons=[dict(label='Play',
+                                                          method='animate',
+                                                          args=[None,
+                                                                dict(frame=dict(duration=200,
+                                                                                redraw=True),
+                                                                     transition=dict(duration=0),
+                                                                     fromcurrent=True,
+                                                                     mode='immediate')
+                                                                ]
+                                                          )
+                                                     ]
+                                            )
+                                       ],
+                          sliders=sliders)
+        return html.Div([
+            # html.H3('Tab content 1'),
+            dcc.Graph(
+                figure=fig
+            )
+        ])
+    if active_tab == 'tab-5':
+        return html.Div([
+            html.H4('Tab content 1'),
+            dcc.Markdown("""By: Kale Beever-Riordon\
+            """),
+
+            dcc.Markdown("""
+            
+            About the Project- \
+            
+            """),
+
+            dcc.Markdown("""
+            
+            Libraries used: Plotly, Dash, Pandas, Numpy, and Dash Bootstrap Components\
+             
+             """),
+            dcc.Markdown("""Data used: Derived from Jon Snow's works during the 3rd great Cholera \
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;Outbreak in London. It includes the locations of casualties from the outbreak, the\
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;locations of 6 water pumps in the SoHo neighborhood, the Census numbers from\
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;1851, and information regarding a cholera outbreak in Naples, Italy.\
+            
+            """),
+
+            dcc.Markdown("""
+            
+            [Project Github](https://github.com/kalejbr/DATA484)
+ 
+            """)
+
         ])
 
 
