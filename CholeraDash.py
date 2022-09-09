@@ -284,7 +284,7 @@ def name_to_figure(active_tab):
                 font=dict(
                     size=22,
                     color="rgb(201, 202, 204)",
-                    family="Balto"
+                    family="Roboto"
                 )
             ),
             paper_bgcolor="rgb(3, 3, 3)",
@@ -398,14 +398,14 @@ def name_to_figure(active_tab):
                       plot_bgcolor="rgb(17,17,17)",
                       font={
                           "color": "rgb(247, 246, 246)",
-                          "family": "Balto"
+                          "family": "Roboto"
                       },
                       title=go.layout.Title(
                           x=0.48,
                           text='Cholera Outbreak - London 1854',
                           font={
                               "color": "rgb(247, 246, 246)",
-                              "family": "Balto"
+                              "family": "Roboto"
                           },
                       ),
                       )
@@ -526,7 +526,7 @@ def name_to_figure(active_tab):
                 font=dict(
                     size=22,
                     color="rgb(201, 202, 204)",
-                    family="Balto"
+                    family="Roboto"
                 )
             ),
             paper_bgcolor="rgb(3, 3, 3)",
@@ -625,7 +625,7 @@ def name_to_figure(active_tab):
                 font=dict(
                     size=22,
                     color="rgb(201, 202, 204)",
-                    family="Balto"
+                    family="Roboto"
                 )
             ),
             hovermode='closest',
