@@ -333,6 +333,7 @@ def name_to_figure(active_tab):
             data.append(trace)
 
         layout = go.Layout(
+            # autosize=True,
             # width=1440,
             height=600,
             showlegend=False,
@@ -605,6 +606,7 @@ def name_to_figure(active_tab):
         )
 
         fig.update_layout(
+            # autosize=True,
             height=600,
             legend=dict(
                 yanchor='top',
@@ -626,7 +628,6 @@ def name_to_figure(active_tab):
                     family="Balto"
                 )
             ),
-            autosize=True,
             hovermode='closest',
             mapbox=dict(
                 style='carto-darkmatter',
