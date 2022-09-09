@@ -1,3 +1,22 @@
+# /////////////////////////////////////////////////////////////////////////////////
+# ///           University of Hawaii
+# /// @brief   Project1 - DATA 484 - Fall 2022
+# ///
+# ///
+# /// @version 1.0 - Creates a dashboard using Plotly and Dash
+# ///       Reads in csv files from data folder containing
+# ///       cholera data. Generates 4 data visualizations and
+# ///       includes reference information.
+# ///
+# /// @author  Kale Beever-Riordon <kalejbr@hawaii.edu>
+# /// @date    08_SEP_2022
+# ///
+# /// @see     https://plotly.com/python-api-reference/
+# ///          https://dash.plotly.com
+# ///
+# ///////////////////////////////////////////////////////////////////////////////
+
+# Import required libraries
 import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
@@ -11,9 +30,10 @@ import pandas as pd
 import random
 import warnings
 
-
+# Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 
+# Initialize the Dash app layout, creates a container with 5 tabs
 app.layout = dbc.Container(
     [
         dcc.Store(id="store"),
@@ -36,29 +56,16 @@ app.layout = dbc.Container(
 )
 
 
-# app.layout = html.Div(children=[
-#     dcc.Tabs(style=tabs_styles, id='tabs-example-1', value='tab-1', children=[
-#         dcc.Tab(label='Tab one', value='tab-1', style=tab_style,
-#                  selected_style=tab_selected_style),
-#         dcc.Tab(label='Tab two', value='tab-2', style=tab_style,
-#                  selected_style=tab_selected_style),
-#     ], className=""),
-#     html.Div(style=tabs_styles, id='tabs-example-content-1')
-# ])
-
-
+#
 @app.callback(
     Output('tabs-example-content-1', 'children'),
     Input('tabs', 'active_tab')
 )
-# @app.callback(
-#     Output('tabs-example-content-1', 'children'),
-#     Input('tabs-example-1', 'value')
-# )
 def update_output(fig_name):
     return name_to_figure(fig_name)
 
 
+# Input from the selected tab is passed and a figure is generated accordingly
 def name_to_figure(active_tab):
 
     if active_tab == 'tab-1':
@@ -301,7 +308,7 @@ def name_to_figure(active_tab):
             )
         )
         return html.Div([
-            # html.H3('Tab content 1'),
+
             dcc.Graph(
                 figure=fig
             )
@@ -419,7 +426,7 @@ def name_to_figure(active_tab):
         fig = go.Figure(data=data, frames=frames, layout=layout)
         fig.update_layout(hovermode='x')
         return html.Div([
-            # html.H3('Tab content 2'),
+
             dcc.Graph(
                 figure=fig
             )
@@ -542,13 +549,12 @@ def name_to_figure(active_tab):
             )
         )
         return html.Div([
-            # html.H3('Tab content 1'),
+
             dcc.Graph(
                 figure=fig
             )
         ])
     if active_tab == 'tab-4':
-
         warnings.filterwarnings("ignore")
 
         df = pd.read_csv('data/choleraDeathLocations.csv')
@@ -589,7 +595,7 @@ def name_to_figure(active_tab):
                 mode='markers',
                 marker=dict(
                     size=8,
-                    color='rgb(255,0,0)'
+                    color='rgb(255, 72, 0)'
                 ),
                 name="Pump Location",
                 hovertemplate='<b>Pump No: </b>%{text}<extra></extra>',
@@ -697,35 +703,35 @@ def name_to_figure(active_tab):
                                        ],
                           sliders=sliders)
         return html.Div([
-            # html.H3('Tab content 1'),
+
             dcc.Graph(
                 figure=fig
             )
         ])
     if active_tab == 'tab-5':
         return html.Div([
-            html.H4('Tab content 1'),
+            html.H4('Project Information'),
             dcc.Markdown("""By: Kale Beever-Riordon\
             """),
 
             dcc.Markdown("""
             
-            About the Project- \
+            About the Project: \
             
             """),
 
             dcc.Markdown("""
             
-            Libraries used: Plotly, Dash, Pandas, Numpy, and Dash Bootstrap Components\
+            &nbsp;&nbsp;&nbsp;&nbsp;Libraries used: Plotly, Dash, Pandas, Numpy, and Dash Bootstrap Components\
              
              """),
-            dcc.Markdown("""Data used: Derived from Jon Snow's works during the 3rd great Cholera \
+            dcc.Markdown("""&nbsp;&nbsp;&nbsp;&nbsp;Data used: Derived from Jon Snow's works during the 3rd great Cholera \
             
-            &nbsp;&nbsp;&nbsp;&nbsp;Outbreak in London. It includes the locations of casualties from the outbreak, the\
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outbreak in London. It includes the locations of casualties from the outbreak, the\
             
-            &nbsp;&nbsp;&nbsp;&nbsp;locations of 6 water pumps in the SoHo neighborhood, the Census numbers from\
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;locations of 6 water pumps in the SoHo neighborhood, the Census numbers from\
             
-            &nbsp;&nbsp;&nbsp;&nbsp;1851, and information regarding a cholera outbreak in Naples, Italy.\
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1851, and information regarding a cholera outbreak in Naples, Italy.\
             
             """),
 
@@ -740,8 +746,3 @@ def name_to_figure(active_tab):
 
 if __name__ == '__main__':
     app.run_server(debug=True, use_reloader=False)
-
-# Apply layout
-
-# Connect plotly graphs with Dash Components
-
