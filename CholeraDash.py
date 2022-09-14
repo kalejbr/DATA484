@@ -100,7 +100,7 @@ def name_to_figure(active_tab):
                 header=dict(
                     values=["Age", "Male", "Female", "All"],
                     font=dict(
-                        color='rgb(227, 227, 230)',
+                        color='rgb(247, 246, 246)',
                         size=17,
                         family="Roboto"
                     ),
@@ -283,7 +283,7 @@ def name_to_figure(active_tab):
                 x=0.5,
                 font=dict(
                     size=22,
-                    color="rgb(201, 202, 204)",
+                    color="rgb(247, 246, 246)",
                     family="Roboto"
                 )
             ),
@@ -453,7 +453,7 @@ def name_to_figure(active_tab):
                 header=dict(
                     values=["Age", "Male", "Female"],
                     font=dict(
-                        color='rgb(227, 227, 230)',
+                        color='rgb(247, 246, 246)',
                         size=17,
                         family="Roboto"
                     ),
@@ -525,7 +525,7 @@ def name_to_figure(active_tab):
                 x=0.5,
                 font=dict(
                     size=22,
-                    color="rgb(201, 202, 204)",
+                    color="rgb(247, 246, 246)",
                     family="Roboto"
                 )
             ),
@@ -624,7 +624,7 @@ def name_to_figure(active_tab):
                 x=0.5,
                 font=dict(
                     size=22,
-                    color="rgb(201, 202, 204)",
+                    color="rgb(247, 246, 246)",
                     family="Roboto"
                 )
             ),
