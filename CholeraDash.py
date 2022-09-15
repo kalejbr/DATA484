@@ -107,7 +107,7 @@ def name_to_figure(active_tab):
                     fill_color='#2b2b2b',
                     line_color="#2b2b2b",
                     align="center",
-                    height=27
+                    height=26
                 ),
                 cells=dict(
                     values=[df2[xy].tolist() for xy in df2.columns[0:]],
@@ -115,7 +115,7 @@ def name_to_figure(active_tab):
                     line_color="#1f1e1e",
                     fill_color="rgb(3, 3, 3)",
                     font_color="rgb(201, 202, 204)",
-                    align='center',
+                    align=('left','right'),
                     height=22,
                 )
             ),

@@ -39,20 +39,23 @@ fig.add_trace(
             font=dict(
                 color='rgb(227, 227, 230)',
                 size=17,
-                family="Roboto"
+                family="Arial"
             ),
             fill_color='#2b2b2b',
             line_color="#2b2b2b",
             align="center",
-            height=27
+            height=26
         ),
         cells=dict(
             values=[df2[xy].tolist() for xy in df2.columns[0:]],
             # line_color=[np.array(colors)[arr1], np.array(colors)[arr2]],
+            font=dict(
+                family='Arial'
+            ),
             line_color="#1f1e1e",
             fill_color="rgb(3, 3, 3)",
             font_color="rgb(201, 202, 204)",
-            align='center',
+            align=('left','right'),
             height=22,
         )
     ),
@@ -251,5 +254,5 @@ fig.update_layout(
            }
 )
 
-fig.show()
-# pyo.plot(fig, filename='UK1851census.html')
+# fig.show()
+pyo.plot(fig, filename='UK1851census.html')
