@@ -102,7 +102,7 @@ def name_to_figure(active_tab):
                     font=dict(
                         color='rgb(247, 246, 246)',
                         size=17,
-                        family="Roboto"
+                        family="Arial"
                     ),
                     fill_color='#2b2b2b',
                     line_color="#2b2b2b",
@@ -112,6 +112,9 @@ def name_to_figure(active_tab):
                 cells=dict(
                     values=[df2[xy].tolist() for xy in df2.columns[0:]],
                     # line_color=[np.array(colors)[arr1], np.array(colors)[arr2]],
+                    font=dict(
+                        family='Arial'
+                    ),
                     line_color="#1f1e1e",
                     fill_color="rgb(3, 3, 3)",
                     font_color="rgb(201, 202, 204)",
